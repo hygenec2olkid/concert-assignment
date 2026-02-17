@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import { Button } from "@mui/material";
 
@@ -59,7 +60,7 @@ export default function Home() {
           >
             Documentation
           </a>
-          <Button> click me</Button>
+          <Button variant="contained"> click me</Button>
         </div>
       </main>
     </div>
