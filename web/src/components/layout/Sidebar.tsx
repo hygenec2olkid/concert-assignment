@@ -1,9 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -12,60 +9,93 @@ import ListItemText from "@mui/material/ListItemText";
 import { menuAdmin, menuUser } from "@/src/lib/constants/menu";
 import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
 import { set } from "@/src/store/features/userSlice";
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
+import HomeIcon from "@mui/icons-material/Home";
+import HistoryIcon from "@mui/icons-material/History";
+import LoopIcon from "@mui/icons-material/Loop";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
-  const [open, setOpen] = React.useState(false);
+  const router = useRouter();
   const role = useAppSelector((state) => state.user.role);
   const dispatch = useAppDispatch();
 
   const menu = React.useMemo(() => {
-    if (role === "admin") {
-      return menuAdmin;
-    } else {
-      return menuUser;
-    }
+    return role === "admin" ? menuAdmin : menuUser;
   }, [role]);
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
 
   const onClickSidebar = (value: string) => {
     if (value === "Switch to user" || value === "Switch to Admin") {
-      const role = value === "Switch to user" ? "user" : "admin";
-      handleOnChangeRole(role);
+      handleSwitchRole(value);
+    }
+
+    if (value === "Home") {
+      router.push("/home");
+    }
+
+    if (value === "History") {
+      router.push("/history");
     }
   };
 
-  const handleOnChangeRole = (role: string) => {
-    dispatch(set(role));
+  const handleSwitchRole = (value: string) => {
+    const newRole = value === "Switch to user" ? "user" : "admin";
+    dispatch(set(newRole));
+
+    if (newRole === "admin") {
+      router.push("/home");
+    }
+
+    if (newRole === "user") {
+      router.push("/user");
+    }
   };
 
-  const DrawerList = (
-    <List>
-      {menu.map((text, index) => (
-        <ListItem key={text} disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-            </ListItemIcon>
-            <ListItemText primary={text} onClick={() => onClickSidebar(text)} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
-  );
+  const getIcon = (text: string) => {
+    switch (text) {
+      case "Home":
+        return <HomeIcon />;
+      case "History":
+        return <HistoryIcon />;
+      case "Switch to user":
+      case "Switch to Admin":
+        return <LoopIcon />;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
+    <div className="flex flex-col h-full">
+      <div>
+        <p className="text-center text-3xl font-semibold py-4">{role}</p>
 
-      <Drawer open={open} onClose={toggleDrawer(false)}>
-        {role}
-        {DrawerList}
-      </Drawer>
+        <List>
+          {menu.map((text) => (
+            <ListItem
+              key={text}
+              disablePadding
+              onClick={() => onClickSidebar(text)}
+            >
+              <ListItemButton>
+                <ListItemIcon>{getIcon(text)}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </div>
+
+      <div className="mt-auto pb-10">
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItemButton>
+        </ListItem>
+      </div>
     </div>
   );
 }

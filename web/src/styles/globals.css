@@ -20,7 +20,12 @@
 }
 
 body {
-  background: var(--background);
+  background: #fbfbfb;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@theme {
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1280px;
 }

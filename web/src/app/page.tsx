@@ -21,7 +21,9 @@ export default function Home() {
         <div>
           {data && (
             <div>
-              {data.data[0].attributes.name}
+              <div className="tablet:text-red-500">
+                {data.data[0].attributes.name}
+              </div>
               <Button onClick={() => callApi(getDog)}>click me</Button>
             </div>
           )}

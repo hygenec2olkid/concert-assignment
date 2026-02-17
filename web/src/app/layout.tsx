@@ -2,7 +2,8 @@
 
 import "../styles/globals.css";
 import Sidebar from "../components/layout/Sidebar";
-import Providers from "../store/providers";
+import { Provider } from "react-redux";
+import { store } from "../store/store";
 
 export default function RootLayout({
   children,
@@ -12,12 +13,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <div className="flex min-h-screen">
-            <Sidebar />
-            {children}
+        <Provider store={store}>
+          <div className="flex h-screen">
+            <aside className="w-[20%] bg-white border-r-1 border-gray-300 hidden tablet:block">
+              <Sidebar />
+            </aside>
+
+            <main className="p-8">{children}</main>
           </div>
-        </Providers>
+        </Provider>
       </body>
     </html>
   );
