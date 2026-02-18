@@ -14,8 +14,17 @@ import HistoryIcon from "@mui/icons-material/History";
 import LoopIcon from "@mui/icons-material/Loop";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useRouter } from "next/navigation";
+import Drawer from "@mui/material/Drawer";
 
-export default function Sidebar() {
+export default function Sidebar({
+  isDrawer,
+  open,
+  onClose,
+}: {
+  isDrawer?: boolean;
+  open?: boolean;
+  onClose?: () => void;
+}) {
   const router = useRouter();
   const role = useAppSelector((state) => state.user.role);
   const dispatch = useAppDispatch();
@@ -78,7 +87,7 @@ export default function Sidebar() {
     }
   };
 
-  return (
+  const sidebarContent = (
     <div className="flex flex-col h-full">
       <>
         <p className="text-center text-3xl font-semibold py-4">{role}</p>
@@ -121,4 +130,62 @@ export default function Sidebar() {
       )}
     </div>
   );
+
+  if (isDrawer) {
+    return (
+      <Drawer
+        anchor="left"
+        open={open ?? false}
+        onClose={onClose}
+        ModalProps={{
+          keepMounted: true, 
+        }}
+      >
+        {sidebarContent}
+      </Drawer>
+    );
+  }
+  return sidebarContent;
+  // return { isDrawer };
+  // <div className="flex flex-col h-full">
+  //   <>
+  //     <p className="text-center text-3xl font-semibold py-4">{role}</p>
+
+  //     <List>
+  //       {menu.map((text) => (
+  //         <ListItem
+  //           key={text}
+  //           disablePadding
+  //           sx={{ padding: 1 }}
+  //           onClick={() => onClickSidebar(text)}
+  //         >
+  //           <ListItemButton
+  //             sx={{
+  //               borderRadius: 2,
+  //               "&:hover": {
+  //                 backgroundColor: "#EAF5F9",
+  //               },
+  //             }}
+  //           >
+  //             <ListItemIcon>{getIcon(text)}</ListItemIcon>
+  //             <ListItemText primary={text} />
+  //           </ListItemButton>
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //   </>
+
+  //   {role && (
+  //     <div className="mt-auto pb-10" onClick={onClickLogout}>
+  //       <ListItem disablePadding>
+  //         <ListItemButton>
+  //           <ListItemIcon>
+  //             <LogoutIcon />
+  //           </ListItemIcon>
+  //           <ListItemText primary="Logout" />
+  //         </ListItemButton>
+  //       </ListItem>
+  //     </div>
+  //   )}
+  // </div>
 }
