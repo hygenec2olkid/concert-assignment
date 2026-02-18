@@ -9,6 +9,7 @@ type CardProps = {
   title: string;
   children: React.ReactNode;
   isConcertCard?: boolean;
+  isFormCard?: boolean;
   onClickButton?: () => void;
 };
 
@@ -17,6 +18,7 @@ export default function CustomCard({
   children,
   isConcertCard,
   onClickButton,
+  isFormCard,
 }: CardProps) {
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -46,6 +48,12 @@ export default function CustomCard({
             </div>
             <Button type="delete" onClick={onClickButton}></Button>
           </div>
+        </CardContent>
+      )}
+
+      {isFormCard && (
+        <CardContent sx={{ display: "flex", justifyContent: "end" }}>
+          <Button type="save" onClick={onClickButton}></Button>
         </CardContent>
       )}
     </Card>

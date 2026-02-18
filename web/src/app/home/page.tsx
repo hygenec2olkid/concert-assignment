@@ -4,6 +4,20 @@ import Button from "@/src/components/ui/Button";
 import Tab from "@/src/components/ui/Tab";
 import Card from "@/src/components/ui/Card";
 import { useDialog } from "@/src/hooks/useDialog";
+import Table from "@/src/components/ui/Table";
+
+const headers = ["Name", "Calories", "Fat", "Carbs", "Protein"];
+
+const rows = [
+  { name: "Frozen yoghurt", calories: 159, fat: 6, carbs: 24, protein: 4 },
+  {
+    name: "Ice cream sandwich",
+    calories: 237,
+    fat: 9,
+    carbs: 37,
+    protein: 4.3,
+  },
+];
 
 export default function Home() {
   const { openDialog, DialogComponent } = useDialog({
@@ -32,7 +46,7 @@ export default function Home() {
           nobis. Maxime, eius sed.
         </div>
       </Card>
-      <Card title="test">
+      <Card title="test" isFormCard>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
           laudantium natus inventore consequatur, a modi dolor deleniti.
@@ -41,6 +55,7 @@ export default function Home() {
         </div>
       </Card>
       <DialogComponent />
+      <Table header={headers} data={rows} />
     </div>
   );
 }
