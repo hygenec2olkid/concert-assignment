@@ -19,7 +19,7 @@ export default function RootLayout({
               <Sidebar />
             </aside>
 
-            <main className="p-8 flex-1">{children}</main>
+            <main className="p-8 flex-1 overflow-y-auto">{children}</main>
           </div>
         </Provider>
       </body>
