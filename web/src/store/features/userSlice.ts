@@ -5,7 +5,7 @@ interface UserStatus {
 }
 
 const initialState: UserStatus = {
-  role: "admin",
+  role: "",
 };
 
 const userSlice = createSlice({

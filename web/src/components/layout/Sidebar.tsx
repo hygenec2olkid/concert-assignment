@@ -21,7 +21,15 @@ export default function Sidebar() {
   const dispatch = useAppDispatch();
 
   const menu = React.useMemo(() => {
-    return role === "admin" ? menuAdmin : menuUser;
+    if (role === "Admin") {
+      return menuAdmin;
+    }
+
+    if (role === "User") {
+      return menuUser;
+    }
+
+    return [];
   }, [role]);
 
   const onClickSidebar = (value: string) => {
@@ -38,15 +46,20 @@ export default function Sidebar() {
     }
   };
 
+  const onClickLogout = () => {
+    dispatch(set(""));
+    router.push("/");
+  };
+
   const handleSwitchRole = (value: string) => {
-    const newRole = value === "Switch to user" ? "user" : "admin";
+    const newRole = value === "Switch to user" ? "User" : "Admin";
     dispatch(set(newRole));
 
-    if (newRole === "admin") {
+    if (newRole === "Admin") {
       router.push("/home");
     }
 
-    if (newRole === "user") {
+    if (newRole === "User") {
       router.push("/user");
     }
   };
@@ -80,7 +93,7 @@ export default function Sidebar() {
             >
               <ListItemButton
                 sx={{
-                  borderRadius: 2, 
+                  borderRadius: 2,
                   "&:hover": {
                     backgroundColor: "#EAF5F9",
                   },
@@ -94,16 +107,18 @@ export default function Sidebar() {
         </List>
       </>
 
-      <div className="mt-auto pb-10">
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItemButton>
-        </ListItem>
-      </div>
+      {role && (
+        <div className="mt-auto pb-10" onClick={onClickLogout}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        </div>
+      )}
     </div>
   );
 }

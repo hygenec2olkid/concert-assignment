@@ -1,34 +1,50 @@
 "use client";
 
-import { Button } from "@mui/material";
 import { getDog } from "../lib/api/sample/request";
 import useApi from "../hooks/useApi";
 import { useEffect } from "react";
 import { TDogResponse } from "../lib/api/sample/type";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { set } from "../store/features/userSlice";
 
 export default function Home() {
+  const router = useRouter();
+  const role = useAppSelector((state) => state.user.role);
+  const dispatch = useAppDispatch();
   const { data, callApi, loading } = useApi<TDogResponse>();
 
   useEffect(() => {
     callApi(getDog);
   }, [callApi]);
 
+  const handleLogin = (role: string) => {
+    dispatch(set(role));
+
+    if (role === "Admin") {
+      router.push("/home");
+    }
+
+    if (role === "User") {
+      router.push("/user");
+    }
+  };
+
   return (
-    <div>
-      {loading ? (
-        <div>loadingg..</div>
-      ) : (
-        <div>
-          {data && (
-            <div>
-              <div className="tablet:text-red-500">
-                {data.data[0].attributes.name}
-              </div>
-              <Button onClick={() => callApi(getDog)}>click me</Button>
-            </div>
-          )}
-        </div>
-      )}
+    <div className="flex items-center justify-center gap-5 h-full">
+      Login via:
+      <button
+        className="border-1 p-2 cursor-pointer hover:bg-blue-400 hover:text-white"
+        onClick={() => handleLogin("Admin")}
+      >
+        admin
+      </button>
+      <button
+        className="border-1 p-2 cursor-pointer hover:bg-blue-400 hover:text-white"
+        onClick={() => handleLogin("User")}
+      >
+        user
+      </button>
     </div>
   );
 }
