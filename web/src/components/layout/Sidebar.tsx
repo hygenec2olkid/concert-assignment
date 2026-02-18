@@ -67,7 +67,7 @@ export default function Sidebar() {
 
   return (
     <div className="flex flex-col h-full">
-      <div>
+      <>
         <p className="text-center text-3xl font-semibold py-4">{role}</p>
 
         <List>
@@ -75,16 +75,24 @@ export default function Sidebar() {
             <ListItem
               key={text}
               disablePadding
+              sx={{ padding: 1 }}
               onClick={() => onClickSidebar(text)}
             >
-              <ListItemButton>
+              <ListItemButton
+                sx={{
+                  borderRadius: 2, 
+                  "&:hover": {
+                    backgroundColor: "#EAF5F9",
+                  },
+                }}
+              >
                 <ListItemIcon>{getIcon(text)}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
-      </div>
+      </>
 
       <div className="mt-auto pb-10">
         <ListItem disablePadding>

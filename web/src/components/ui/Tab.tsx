@@ -23,7 +23,7 @@ function CustomTabPanel({
 }) {
   return (
     <div hidden={value !== index} role="tabpanel">
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ marginTop: 2 }}>{children}</Box>}
     </div>
   );
 }
@@ -37,13 +37,11 @@ export default function CustomTabs({ tabs }: TabPanelProps) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box>
-        <Tabs value={value} onChange={handleChange}>
-          {tabs.map((tab, index) => (
-            <Tab key={index} label={tab.label} />
-          ))}
-        </Tabs>
-      </Box>
+      <Tabs value={value} onChange={handleChange}>
+        {tabs.map((tab, index) => (
+          <Tab key={index} label={tab.label} sx={{ textTransform: "none" }} />
+        ))}
+      </Tabs>
 
       {tabs.map((tab, index) => (
         <CustomTabPanel key={index} value={value} index={index}>

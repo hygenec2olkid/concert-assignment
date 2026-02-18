@@ -25,6 +25,7 @@ export default function CustomCard({
       <CardHeader
         title={title}
         sx={{
+          padding: "30px",
           "& .MuiCardHeader-content": {
             borderBottom: "1px solid #C2C2C2",
             display: "inline-block",
@@ -37,10 +38,14 @@ export default function CustomCard({
           },
         }}
       ></CardHeader>
-      <CardContent sx={{ paddingY: 0 }}>{children}</CardContent>
+      <CardContent sx={{ paddingY: 0, paddingInline: "30px" }}>
+        {children}
+      </CardContent>
 
       {isConcertCard && (
-        <CardContent sx={{ display: "flex", alignItems: "bottom" }}>
+        <CardContent
+          sx={{ display: "flex", alignItems: "bottom", paddingInline: "30px" }}
+        >
           <div className="flex justify-between items-center w-full">
             <div>
               <PersonIcon sx={{ color: "grey" }} />
@@ -52,7 +57,9 @@ export default function CustomCard({
       )}
 
       {isFormCard && (
-        <CardContent sx={{ display: "flex", justifyContent: "end" }}>
+        <CardContent
+          sx={{ display: "flex", justifyContent: "end", paddingInline: "30px" }}
+        >
           <Button type="save" onClick={onClickButton}></Button>
         </CardContent>
       )}
