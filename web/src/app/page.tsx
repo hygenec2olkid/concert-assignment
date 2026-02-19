@@ -1,22 +1,12 @@
 "use client";
 
-import { getDog } from "../lib/api/sample/request";
-import useApi from "../hooks/useApi";
-import { useEffect } from "react";
-import { TDogResponse } from "../lib/api/sample/type";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useAppDispatch } from "../store/hooks";
 import { set } from "../store/features/userSlice";
 
 export default function Home() {
   const router = useRouter();
-  const role = useAppSelector((state) => state.user.role);
   const dispatch = useAppDispatch();
-  const { data, callApi, loading } = useApi<TDogResponse>();
-
-  useEffect(() => {
-    callApi(getDog);
-  }, [callApi]);
 
   const handleLogin = (role: string) => {
     dispatch(set(role));
