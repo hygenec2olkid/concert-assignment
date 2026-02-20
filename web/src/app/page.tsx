@@ -2,16 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "../store/hooks";
-import { setHydrated, setRole } from "../store/features/userSlice";
-import { useEffect } from "react";
+import { setRole } from "../store/features/userSlice";
 
 export default function Home() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setHydrated(true));
-  }, [dispatch]);
 
   const handleLogin = (role: string) => {
     dispatch(setRole(role));

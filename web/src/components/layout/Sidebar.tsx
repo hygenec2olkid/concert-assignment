@@ -26,7 +26,7 @@ export default function Sidebar({
   onClose?: () => void;
 }) {
   const router = useRouter();
-  const { role, isHydrated } = useAppSelector((state) => state.user);
+  const { role } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
 
@@ -123,12 +123,13 @@ export default function Sidebar({
     </div>
   );
 
-  if (pathname === "/") return null; // Don't show sidebar on login page
-  
-  if (!role && isHydrated) return null; // Don't show sidebar if no role is set and state is hydrated
-
   return (
-    <aside className="w-[20%] hidden tablet:block">
+    <aside
+      className={`w-[20%] hidden tablet:block ${
+        pathname === "/" ? "tablet:hidden" : ""
+      }
+    `}
+    >
       {isDrawer ? (
         <Drawer
           anchor="left"
