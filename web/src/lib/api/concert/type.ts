@@ -8,6 +8,13 @@ export interface Concert {
   updatedAt: string;
 }
 
+export interface ConcertResponse {
+  concertName: string;
+  description: string;
+  totalSeat: number;
+  availableSeat: number;
+}
+
 export type CreateConcertRequest = {
   concertName: string;
   description: string;

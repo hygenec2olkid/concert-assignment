@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ConcertService } from './concert.service';
-import { CreateConcertDto } from './dto/create-concert.dto';
+import { CreateConcertDto } from './dto/request/create-concert.dto';
 
 @Controller('concert')
 export class ConcertController {

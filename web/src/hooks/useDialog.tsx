@@ -13,7 +13,6 @@ type DialogType = "delete";
 
 type DialogProps = {
   type: DialogType;
-  content: React.ReactNode;
   onConfirm?: () => void;
 };
 
@@ -31,10 +30,14 @@ const dialogConfig: Record<DialogType, DialogConfig> = {
   },
 };
 
-export function useDialog({ type, content, onConfirm }: DialogProps) {
+export function useDialog({ type, onConfirm }: DialogProps) {
   const [open, setOpen] = useState(false);
+  const [content, setContent] = useState("");
 
-  const openDialog = () => setOpen(true);
+  const openDialog = (content: string) => {
+    setOpen(true);
+    setContent(content);
+  };
   const closeDialog = () => setOpen(false);
 
   const config = dialogConfig[type];
@@ -53,7 +56,7 @@ export function useDialog({ type, content, onConfirm }: DialogProps) {
 
         <DialogTitle>{config.title}</DialogTitle>
 
-        <DialogContent>{content}</DialogContent>
+        <DialogContent>{`"${content}"`}</DialogContent>
 
         <DialogActions sx={{ justifyContent: "center", gap: 1 }}>
           {config.buttonListType.map((buttonType, index) => (
