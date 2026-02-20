@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -15,6 +14,7 @@ import LoopIcon from "@mui/icons-material/Loop";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useRouter } from "next/navigation";
 import Drawer from "@mui/material/Drawer";
+import { useMemo } from "react";
 
 export default function Sidebar({
   isDrawer,
@@ -29,7 +29,7 @@ export default function Sidebar({
   const role = useAppSelector((state) => state.user.role);
   const dispatch = useAppDispatch();
 
-  const menu = React.useMemo(() => {
+  const menu = useMemo(() => {
     if (role === "Admin") {
       return menuAdmin;
     }
@@ -47,7 +47,7 @@ export default function Sidebar({
       dispatch(set(newRole));
     }
 
-    if (value === "Home" || "Switch to Admin") {
+    if (value === "Home" || value === "Switch to Admin") {
       router.push("/home");
     }
 
@@ -55,7 +55,7 @@ export default function Sidebar({
       router.push("/history");
     }
 
-    if (value === "Switch to user"){
+    if (value === "Switch to user") {
       router.push("/user");
     }
   };
@@ -123,6 +123,8 @@ export default function Sidebar({
     </div>
   );
 
+  if (!role) return null;
+
   if (isDrawer) {
     return (
       <Drawer
@@ -130,7 +132,7 @@ export default function Sidebar({
         open={open ?? false}
         onClose={onClose}
         ModalProps={{
-          keepMounted: true, 
+          keepMounted: true,
         }}
       >
         {sidebarContent}
