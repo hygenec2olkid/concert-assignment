@@ -14,6 +14,7 @@ export type ButtonType =
 
 type ButtonsProps = {
   type: ButtonType;
+  loading?: boolean;
   onClick?: () => void;
 };
 
@@ -55,7 +56,7 @@ const buttonConfig: Record<ButtonType, ButtonConfig> = {
   },
 };
 
-export default function CustomButton({ type, onClick }: ButtonsProps) {
+export default function CustomButton({ type, onClick, loading }: ButtonsProps) {
   const config = buttonConfig[type];
 
   return (
@@ -64,6 +65,7 @@ export default function CustomButton({ type, onClick }: ButtonsProps) {
       color={config.color}
       startIcon={config.icon}
       onClick={onClick}
+      loading={loading}
       sx={{
         textTransform: "none",
         boxShadow: "none",

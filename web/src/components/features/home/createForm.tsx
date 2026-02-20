@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import CustomCard from "../../ui/Card";
 import CustomInput from "../../ui/Input";
+import useApi from "@/src/hooks/useApi";
+import { createNewConcertApi } from "@/src/lib/api/concert/request";
+import { Concert, CreateConcertRequest } from "@/src/lib/api/concert/type";
 
 type FormData = {
   concertName: string;
@@ -9,18 +12,36 @@ type FormData = {
 };
 
 export default function CreateForm() {
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
       concertName: "",
       description: "",
       seat: 0,
     },
   });
+
+  const { callApi, loading } = useApi<Concert>();
+
+  const createNewConcert = async (data: FormData) => {
+    const req: CreateConcertRequest = {
+      concertName: data.concertName,
+      description: data.description,
+      totalSeat: data.seat,
+    };
+    
+    const res = await callApi(() => createNewConcertApi(req));
+
+    if (res) {
+      reset();
+    }
+  };
+
   return (
     <CustomCard
       isFormCard
       title="Create"
-      onClickButton={handleSubmit((data) => console.log(data))}
+      loading={loading}
+      onClickButton={handleSubmit((data) => createNewConcert(data))}
     >
       <form>
         <div className="grid grid-cols-1 tablet:grid-cols-2 gap-4">

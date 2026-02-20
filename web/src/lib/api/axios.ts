@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosClient = axios.create({
-  baseURL: "https://dogapi.dog/api/v2",
+  baseURL: "http://localhost:3005",
   headers: {
     "Content-Type": "application/json",
   },

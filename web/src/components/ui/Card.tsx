@@ -10,6 +10,7 @@ type CardProps = {
   children: React.ReactNode;
   isConcertCard?: boolean;
   isFormCard?: boolean;
+  loading?: boolean;
   onClickButton?: () => void;
 };
 
@@ -19,6 +20,7 @@ export default function CustomCard({
   isConcertCard,
   onClickButton,
   isFormCard,
+  loading,
 }: CardProps) {
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -60,7 +62,11 @@ export default function CustomCard({
         <CardContent
           sx={{ display: "flex", justifyContent: "end", paddingInline: "30px" }}
         >
-          <CustomButton type="save" onClick={onClickButton}></CustomButton>
+          <CustomButton
+            type="save"
+            onClick={onClickButton}
+            loading={loading}
+          ></CustomButton>
         </CardContent>
       )}
     </Card>
