@@ -72,6 +72,6 @@ export function useDialog({ type, content, onConfirm }: DialogProps) {
     openDialog,
     closeDialog,
     DialogComponent,
-    onConfirm
+    onConfirm,
   };
 }

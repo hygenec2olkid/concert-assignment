@@ -7,12 +7,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { menuAdmin, menuUser } from "@/src/lib/constants/menu";
 import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
-import { set } from "@/src/store/features/userSlice";
+import { setRole } from "@/src/store/features/userSlice";
 import HomeIcon from "@mui/icons-material/Home";
 import HistoryIcon from "@mui/icons-material/History";
 import LoopIcon from "@mui/icons-material/Loop";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Drawer from "@mui/material/Drawer";
 import { useMemo } from "react";
 
@@ -26,8 +26,9 @@ export default function Sidebar({
   onClose?: () => void;
 }) {
   const router = useRouter();
-  const role = useAppSelector((state) => state.user.role);
+  const { role, isHydrated } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
 
   const menu = useMemo(() => {
     if (role === "Admin") {
@@ -44,7 +45,7 @@ export default function Sidebar({
   const onClickSidebar = (value: string) => {
     if (value === "Switch to user" || value === "Switch to Admin") {
       const newRole = value === "Switch to user" ? "User" : "Admin";
-      dispatch(set(newRole));
+      dispatch(setRole(newRole));
     }
 
     if (value === "Home" || value === "Switch to Admin") {
@@ -61,7 +62,8 @@ export default function Sidebar({
   };
 
   const onClickLogout = () => {
-    dispatch(set(""));
+    dispatch(setRole(""));
+    localStorage.removeItem("role");
     router.push("/");
   };
 
@@ -108,37 +110,39 @@ export default function Sidebar({
         </List>
       </>
 
-      {role && (
-        <div className="mt-auto pb-10" onClick={onClickLogout}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
-            </ListItemButton>
-          </ListItem>
-        </div>
-      )}
+      <div className="mt-auto pb-10" onClick={onClickLogout}>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItemButton>
+        </ListItem>
+      </div>
     </div>
   );
 
-  if (!role) return null;
+  if (pathname === "/") return null; // Don't show sidebar on login page
+  
+  if (!role && isHydrated) return null; // Don't show sidebar if no role is set and state is hydrated
 
-  if (isDrawer) {
-    return (
-      <Drawer
-        anchor="left"
-        open={open ?? false}
-        onClose={onClose}
-        ModalProps={{
-          keepMounted: true,
-        }}
-      >
-        {sidebarContent}
-      </Drawer>
-    );
-  }
-
-  return sidebarContent;
+  return (
+    <aside className="w-[20%] hidden tablet:block">
+      {isDrawer ? (
+        <Drawer
+          anchor="left"
+          open={open ?? false}
+          onClose={onClose}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          {sidebarContent}
+        </Drawer>
+      ) : (
+        sidebarContent
+      )}
+    </aside>
+  );
 }

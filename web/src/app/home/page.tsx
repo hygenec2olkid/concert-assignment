@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
-  
+
   return (
     <>
       <Sidebar isDrawer open={open} onClose={() => setOpen(false)} />

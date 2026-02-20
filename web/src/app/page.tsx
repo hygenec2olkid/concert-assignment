@@ -2,14 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "../store/hooks";
-import { set } from "../store/features/userSlice";
+import { setHydrated, setRole } from "../store/features/userSlice";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(setHydrated(true));
+  }, [dispatch]);
+
   const handleLogin = (role: string) => {
-    dispatch(set(role));
+    dispatch(setRole(role));
+    localStorage.setItem("role", role);
 
     if (role === "Admin") {
       router.push("/home");

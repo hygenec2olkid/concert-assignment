@@ -1,35 +1,25 @@
-"use client";
-
 import "../styles/globals.css";
 import Sidebar from "../components/layout/Sidebar";
-import { Provider } from "react-redux";
-import { store } from "../store/store";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { ReduxProvider } from "../components/provider/ReduxProvider";
+import AuthProvider from "../components/provider/AuthProvider";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace("/");
-  }, [router]);
-
   return (
     <html lang="en">
       <body>
-        <Provider store={store}>
-          <div className="flex h-screen">
-            <aside className="w-[20%] hidden tablet:block">
+        <ReduxProvider>
+          <AuthProvider>
+            <div className="flex h-screen">
               <Sidebar />
-            </aside>
 
-            <main className="p-8 flex-1 overflow-y-auto">{children}</main>
-          </div>
-        </Provider>
+              <main className="p-8 flex-1 overflow-y-auto">{children}</main>
+            </div>
+          </AuthProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import React from "react";
 import PersonIcon from "@mui/icons-material/Person";
-import Button from "./Button";
+import CustomButton from "./Button";
 
 type CardProps = {
   title: string;
@@ -51,7 +51,7 @@ export default function CustomCard({
               <PersonIcon sx={{ color: "grey" }} />
               <span className="ml-1"> 200</span>
             </div>
-            <Button type="delete" onClick={onClickButton}></Button>
+            <CustomButton type="delete" onClick={onClickButton}></CustomButton>
           </div>
         </CardContent>
       )}
@@ -60,7 +60,7 @@ export default function CustomCard({
         <CardContent
           sx={{ display: "flex", justifyContent: "end", paddingInline: "30px" }}
         >
-          <Button type="save" onClick={onClickButton}></Button>
+          <CustomButton type="save" onClick={onClickButton}></CustomButton>
         </CardContent>
       )}
     </Card>
