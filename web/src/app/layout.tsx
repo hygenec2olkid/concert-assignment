@@ -23,7 +23,7 @@ export default function RootLayout({
       <body>
         <Provider store={store}>
           <div className="flex h-screen">
-            <aside className="w-[20%] bg-white border-r-1 border-gray-300 hidden tablet:block">
+            <aside className="w-[20%] hidden tablet:block">
               <Sidebar />
             </aside>
 

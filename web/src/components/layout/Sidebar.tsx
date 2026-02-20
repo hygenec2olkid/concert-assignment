@@ -88,7 +88,7 @@ export default function Sidebar({
   };
 
   const sidebarContent = (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-white border-r-1 border-gray-300">
       <>
         <p className="text-center text-3xl font-semibold py-4">{role}</p>
 
@@ -145,47 +145,6 @@ export default function Sidebar({
       </Drawer>
     );
   }
+
   return sidebarContent;
-  // return { isDrawer };
-  // <div className="flex flex-col h-full">
-  //   <>
-  //     <p className="text-center text-3xl font-semibold py-4">{role}</p>
-
-  //     <List>
-  //       {menu.map((text) => (
-  //         <ListItem
-  //           key={text}
-  //           disablePadding
-  //           sx={{ padding: 1 }}
-  //           onClick={() => onClickSidebar(text)}
-  //         >
-  //           <ListItemButton
-  //             sx={{
-  //               borderRadius: 2,
-  //               "&:hover": {
-  //                 backgroundColor: "#EAF5F9",
-  //               },
-  //             }}
-  //           >
-  //             <ListItemIcon>{getIcon(text)}</ListItemIcon>
-  //             <ListItemText primary={text} />
-  //           </ListItemButton>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   </>
-
-  //   {role && (
-  //     <div className="mt-auto pb-10" onClick={onClickLogout}>
-  //       <ListItem disablePadding>
-  //         <ListItemButton>
-  //           <ListItemIcon>
-  //             <LogoutIcon />
-  //           </ListItemIcon>
-  //           <ListItemText primary="Logout" />
-  //         </ListItemButton>
-  //       </ListItem>
-  //     </div>
-  //   )}
-  // </div>
 }
