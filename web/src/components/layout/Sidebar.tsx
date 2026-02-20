@@ -43,34 +43,26 @@ export default function Sidebar({
 
   const onClickSidebar = (value: string) => {
     if (value === "Switch to user" || value === "Switch to Admin") {
-      handleSwitchRole(value);
+      const newRole = value === "Switch to user" ? "User" : "Admin";
+      dispatch(set(newRole));
     }
 
-    if (value === "Home") {
+    if (value === "Home" || "Switch to Admin") {
       router.push("/home");
     }
 
     if (value === "History") {
       router.push("/history");
     }
+
+    if (value === "Switch to user"){
+      router.push("/user");
+    }
   };
 
   const onClickLogout = () => {
     dispatch(set(""));
     router.push("/");
-  };
-
-  const handleSwitchRole = (value: string) => {
-    const newRole = value === "Switch to user" ? "User" : "Admin";
-    dispatch(set(newRole));
-
-    if (newRole === "Admin") {
-      router.push("/home");
-    }
-
-    if (newRole === "User") {
-      router.push("/user");
-    }
   };
 
   const getIcon = (text: string) => {
