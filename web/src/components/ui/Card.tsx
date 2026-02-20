@@ -4,11 +4,13 @@ import CardContent from "@mui/material/CardContent";
 import React from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "./Button";
+import { ConcertResponse } from "@/src/lib/api/concert/type";
 
 type CardProps = {
   title: string;
   children: React.ReactNode;
   isConcertCard?: boolean;
+  cardContent?: ConcertResponse;
   isFormCard?: boolean;
   loading?: boolean;
   onClickButton?: () => void;
@@ -20,6 +22,7 @@ export default function CustomCard({
   isConcertCard,
   onClickButton,
   isFormCard,
+  cardContent,
 }: CardProps) {
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -48,9 +51,11 @@ export default function CustomCard({
           sx={{ display: "flex", alignItems: "bottom", paddingInline: "30px" }}
         >
           <div className="flex justify-between items-center w-full">
-            <div>
+            <div className="flex items-end">
               <PersonIcon sx={{ color: "grey" }} />
-              <span className="ml-1"> 200</span>
+              <span className="ml-1 text-sm">
+                {`${cardContent?.availableSeat} / ${cardContent?.totalSeat}`}
+              </span>
             </div>
             <CustomButton type="delete" onClick={onClickButton}></CustomButton>
           </div>
@@ -61,10 +66,7 @@ export default function CustomCard({
         <CardContent
           sx={{ display: "flex", justifyContent: "end", paddingInline: "30px" }}
         >
-          <CustomButton
-            type="save"
-            onClick={onClickButton}
-          ></CustomButton>
+          <CustomButton type="save" onClick={onClickButton}></CustomButton>
         </CardContent>
       )}
     </Card>

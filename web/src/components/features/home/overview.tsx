@@ -43,8 +43,17 @@ export default function Overview() {
     }
   };
 
+  const execute = async () => {
+    try {
+      onLoading();
+      Promise.all([await callApi(() => getConcertApi())]);
+    } finally {
+      offLoading();
+    }
+  };
+
   useEffect(() => {
-    getConcerts();
+    execute();
   }, []);
 
   return (
@@ -54,6 +63,7 @@ export default function Overview() {
           key={concert.concertName}
           title={concert.concertName}
           isConcertCard
+          cardContent={concert}
           onClickButton={() => {
             openDialog(concert.id, concert.concertName);
           }}
