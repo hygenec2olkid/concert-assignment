@@ -3,25 +3,49 @@ import CustomCard from "../../ui/Card";
 import { useDialog } from "@/src/hooks/useDialog";
 import useApi from "@/src/hooks/useApi";
 import { useEffect } from "react";
-import { getConcertApi } from "@/src/lib/api/concert/request";
+import { deleteConcertApi, getConcertApi } from "@/src/lib/api/concert/request";
 import { ConcertResponse } from "@/src/lib/api/concert/type";
+import { useLoading } from "@/src/hooks/useLoading";
 
 export default function Overview() {
-  const { ToastComponent, handleClick } = useToast({
+  const { ToastComponent, onOpen } = useToast({
     type: "success",
-    message: "Concert deleted successfully",
   });
 
-  const { openDialog, DialogComponent } = useDialog({
+  const { openDialog, DialogComponent, value } = useDialog({
     type: "delete",
-    onConfirm: () => handleClick(),
+    onConfirm: () => onDeleteConcert(value),
   });
+
+  const { onLoading, LoadingComponent, offLoading } = useLoading();
 
   const { data: concerts, callApi } = useApi<ConcertResponse[]>();
 
+  const { callApi: deleteConcert } = useApi<{
+    message: string;
+  }>();
+
+  const getConcerts = async () => {
+    try {
+      onLoading();
+      await callApi(() => getConcertApi());
+    } finally {
+      offLoading();
+    }
+  };
+
+  const onDeleteConcert = async (id: number) => {
+    const res = await deleteConcert(() => deleteConcertApi(id));
+
+    if (res) {
+      onOpen(res.message);
+      getConcerts();
+    }
+  };
+
   useEffect(() => {
-    callApi(() => getConcertApi());
-  }, [callApi]);
+    getConcerts();
+  }, []);
 
   return (
     <div className="flex flex-col gap-5">
@@ -31,16 +55,16 @@ export default function Overview() {
           title={concert.concertName}
           isConcertCard
           onClickButton={() => {
-            openDialog(concert.concertName);
+            openDialog(concert.id, concert.concertName);
           }}
         >
           <div>{concert.description}</div>
         </CustomCard>
       ))}
 
-      {/* ✅ Only ONE dialog */}
       <DialogComponent />
       <ToastComponent />
+      <LoadingComponent />
     </div>
   );
 }

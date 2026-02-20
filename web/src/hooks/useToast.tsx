@@ -8,7 +8,6 @@ type ToastType = "success";
 
 type ToastProps = {
   type: ToastType;
-  message: React.ReactNode;
 };
 
 type ToastConfig = {
@@ -24,11 +23,13 @@ const ToastConfig: Record<ToastType, ToastConfig> = {
   },
 };
 
-export function useToast({ type, message }: ToastProps) {
+export function useToast({ type }: ToastProps) {
   const [open, setOpen] = React.useState(false);
+  const [content, setContent] = React.useState("");
   const config = ToastConfig[type];
 
-  const handleClick = () => {
+  const onOpen = (content: string) => {
+    setContent(content);
     setOpen(true);
   };
 
@@ -73,12 +74,12 @@ export function useToast({ type, message }: ToastProps) {
         message={
           <span className="flex items-center gap-2 text-black">
             {config.icon}
-            {message}
+            {content}
           </span>
         }
       />
     </div>
   );
 
-  return { ToastComponent, handleClick };
+  return { ToastComponent, onOpen };
 }

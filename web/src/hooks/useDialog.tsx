@@ -33,10 +33,12 @@ const dialogConfig: Record<DialogType, DialogConfig> = {
 export function useDialog({ type, onConfirm }: DialogProps) {
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
+  const [value, setValue] = useState<number>(0);
 
-  const openDialog = (content: string) => {
+  const openDialog = (value: number, message: string) => {
     setOpen(true);
-    setContent(content);
+    setValue(value);
+    setContent(message);
   };
   const closeDialog = () => setOpen(false);
 
@@ -76,5 +78,6 @@ export function useDialog({ type, onConfirm }: DialogProps) {
     closeDialog,
     DialogComponent,
     onConfirm,
+    value,
   };
 }

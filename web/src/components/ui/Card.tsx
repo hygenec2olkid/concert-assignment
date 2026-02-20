@@ -20,7 +20,6 @@ export default function CustomCard({
   isConcertCard,
   onClickButton,
   isFormCard,
-  loading,
 }: CardProps) {
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -65,7 +64,6 @@ export default function CustomCard({
           <CustomButton
             type="save"
             onClick={onClickButton}
-            loading={loading}
           ></CustomButton>
         </CardContent>
       )}

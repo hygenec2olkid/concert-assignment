@@ -10,3 +10,9 @@ export const createNewConcertApi: (
 export const getConcertApi: () => Promise<ConcertResponse[]> = () => {
   return requset.get("/concert");
 };
+
+export const deleteConcertApi: (id: number) => Promise<{ message: string }> = (
+  id
+) => {
+  return requset.delete(`/concert/${id}`);
+};

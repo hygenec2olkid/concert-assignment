@@ -9,6 +9,7 @@ export interface Concert {
 }
 
 export interface ConcertResponse {
+  id: number;
   concertName: string;
   description: string;
   totalSeat: number;

@@ -1,4 +1,5 @@
-export class CreateConcertDto {
+export class ConcertDto {
+  id: number;
   concertName: string;
   description: string;
   totalSeat: number;
