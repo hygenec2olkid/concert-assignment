@@ -1,9 +1,12 @@
+import { History } from 'src/features/history/entity/history.entity';
+import { Ticket } from 'src/features/concert/entities/ticket.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('concerts')
@@ -28,4 +31,10 @@ export class Concert {
 
   @UpdateDateColumn({ name: 'updatedAt' })
   updatedAt: Date;
+
+  @OneToMany(() => Ticket, (ticket) => ticket.concert)
+  tickets: Ticket[];
+
+  @OneToMany(() => History, (history) => history.concert)
+  histories: History[];
 }

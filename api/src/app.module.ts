@@ -2,13 +2,14 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConcertModule } from './features/concert/concert.module';
-import { ReservationModule } from './features/reservation/reservation.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './features/user/user.module';
+import { HistoryModule } from './features/history/reservation.module';
 
 @Module({
   imports: [
     ConcertModule,
-    ReservationModule,
+    HistoryModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -19,6 +20,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

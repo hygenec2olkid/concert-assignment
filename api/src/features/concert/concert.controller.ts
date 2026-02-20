@@ -8,7 +8,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { ConcertService } from './concert.service';
-import { CreateConcertDto } from './dto/request/create-concert.dto';
+import { CreateConcertDto } from './dto/create-concert.dto';
+import { BuyTicketDto } from './dto/buy-ticket.dto';
 
 @Controller('concert')
 export class ConcertController {
@@ -20,12 +21,17 @@ export class ConcertController {
   }
 
   @Post()
-  createConcert(@Body() createConcertDto: CreateConcertDto) {
-    return this.concertService.createConcert(createConcertDto);
+  createConcert(@Body() req: CreateConcertDto) {
+    return this.concertService.createConcert(req);
   }
 
   @Delete(':id')
   deleteConcert(@Param('id', ParseIntPipe) id: number) {
     return this.concertService.deleteConcert(id);
+  }
+
+  @Post('reserve')
+  buyTicket(@Body() req: BuyTicketDto) {
+    return this.concertService.buyTicket(req);
   }
 }
