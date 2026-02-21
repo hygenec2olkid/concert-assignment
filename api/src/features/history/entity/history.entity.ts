@@ -26,8 +26,8 @@ export class History {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @CreateDateColumn({ name: 'reserveAt' })
-  reserveAt: Date;
+  @CreateDateColumn({ name: 'createdAt' })
+  createAt: Date;
 
   @Column({ length: 50 })
   action: string;

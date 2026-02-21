@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateNewHistoryDto } from './dto/create-new-history.dto';
 import { History } from './entity/history.entity';
+import { HistoryDto } from './dto/history.dto';
 
 @Injectable()
 export class HistoryService {
@@ -20,5 +21,25 @@ export class HistoryService {
     history.concert = concert;
 
     return await this.historyRepository.save(history);
+  }
+
+  async findAll(): Promise<HistoryDto[]> {
+    const history = await this.historyRepository.find({
+      order: {
+        id: 'DESC',
+      },
+      relations: ['user', 'concert'],
+    });
+
+    return history.map((h) => {
+      const { user, createAt, concert, action } = h;
+
+      return {
+        dateTime: createAt.toISOString(),
+        username: user.username,
+        concertName: concert.name,
+        action: action,
+      };
+    });
   }
 }

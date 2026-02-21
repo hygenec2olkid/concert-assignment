@@ -115,11 +115,7 @@ export class ConcertService {
       order: {
         id: 'ASC',
       },
-      relations: {
-        tickets: {
-          user: true,
-        },
-      },
+      relations: ['tickets', 'tickets.user'],
     });
 
     return concerts.map((concert) => {
