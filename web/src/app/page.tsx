@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "../store/hooks";
-import { setRole } from "../store/features/userSlice";
+import { setRole, setUserId } from "../store/features/userSlice";
 import useApi from "../hooks/useApi";
 import { useEffect } from "react";
 import { getListUserApi } from "../lib/api/user/request";
@@ -11,6 +11,7 @@ import { UserResponse } from "../lib/api/user/type";
 export default function Home() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { callApi } = useApi<UserResponse[]>();
 
   const handleLogin = (role: string) => {
     dispatch(setRole(role));
@@ -25,11 +26,15 @@ export default function Home() {
     }
   };
 
-  const { callApi } = useApi<UserResponse[]>();
-
   useEffect(() => {
-    const execute = () => {
-      callApi(() => getListUserApi());
+    const execute = async () => {
+      const data = await callApi(() => getListUserApi());
+
+      if (data && data.length > 0) {
+        const firstUser = data[0]; // set login with first user
+        dispatch(setUserId(firstUser.id));
+        localStorage.setItem("userId", firstUser.id.toString());
+      }
     };
 
     execute();

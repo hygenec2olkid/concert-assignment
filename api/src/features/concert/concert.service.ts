@@ -27,7 +27,11 @@ export class ConcertService {
   ) {}
 
   async findAll(): Promise<ConcertDto[]> {
-    const concerts = await this.concertRepository.find();
+    const concerts = await this.concertRepository.find({
+      order: {
+        id: 'ASC',
+      },
+    });
 
     return concerts.map((concert) => {
       const { name, description, total_seat } = concert;
@@ -104,5 +108,63 @@ export class ConcertService {
     });
 
     return { message: 'Reserve successfully' };
+  }
+
+  async userGetListConcert(userId: number): Promise<ConcertDto[]> {
+    const concerts = await this.concertRepository.find({
+      order: {
+        id: 'ASC',
+      },
+      relations: {
+        tickets: {
+          user: true,
+        },
+      },
+    });
+
+    return concerts.map((concert) => {
+      const { name, description, total_seat } = concert;
+
+      return {
+        id: concert.id,
+        concertName: name,
+        description: description || '',
+        totalSeat: total_seat,
+        availableSeat: concert.available_seat,
+        reservedSeat: concert.tickets.some(
+          (ticket) => ticket.user.id === userId,
+        ),
+      };
+    });
+  }
+
+  async cancelTicket(req: BuyTicketDto) {
+    const { concertId, userId } = req;
+
+    const ticket = await this.ticketRepository.findOne({
+      where: {
+        concert: { id: concertId },
+        user: { id: userId },
+      },
+      relations: ['concert', 'user'],
+    });
+
+    if (!ticket) {
+      throw new NotFoundException('Ticket not found');
+    }
+
+    await this.ticketRepository.remove(ticket);
+
+    const concert = ticket.concert;
+    concert.available_seat += 1;
+    await this.concertRepository.save(concert);
+
+    await this.historyService.createNewHistory({
+      concert: concert,
+      user: ticket.user,
+      action: 'Cancel',
+    });
+
+    return { message: 'Cancel successfully' };
   }
 }

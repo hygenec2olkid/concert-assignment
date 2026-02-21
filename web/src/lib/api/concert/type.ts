@@ -14,10 +14,16 @@ export interface ConcertResponse {
   description: string;
   totalSeat: number;
   availableSeat: number;
+  reservedSeat?: boolean;
 }
 
 export type CreateConcertRequest = {
   concertName: string;
   description: string;
   totalSeat: number;
+};
+
+export type ConcertUserRequest = {
+  concertId: number;
+  userId: number;
 };

@@ -64,6 +64,7 @@ export default function Sidebar({
   const onClickLogout = () => {
     dispatch(setRole(""));
     localStorage.removeItem("role");
+    localStorage.removeItem("userId");
     router.push("/");
   };
 

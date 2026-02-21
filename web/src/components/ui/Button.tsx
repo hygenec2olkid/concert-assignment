@@ -10,7 +10,15 @@ export type ButtonType =
   | "cancel"
   | "reserve"
   | "cancelDialog"
-  | "confirmDelete";
+  | "confirmDelete"
+  | "confirmCancel"
+  | "confirmReserve";
+
+export const CONFIRM_TYPES: ButtonType[] = [
+  "confirmDelete",
+  "confirmCancel",
+  "confirmReserve",
+];
 
 type ButtonsProps = {
   type: ButtonType;
@@ -52,6 +60,14 @@ const buttonConfig: Record<ButtonType, ButtonConfig> = {
   confirmDelete: {
     label: "Yes, Delete",
     color: "error",
+  },
+  confirmCancel: {
+    label: "Yes, Cancel",
+    color: "error",
+  },
+  confirmReserve: {
+    label: "Yes, Reserve",
+    color: "primary",
   },
 };
 

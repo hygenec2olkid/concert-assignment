@@ -4,4 +4,5 @@ export class ConcertDto {
   description: string;
   totalSeat: number;
   availableSeat: number;
+  reservedSeat?: boolean;
 }

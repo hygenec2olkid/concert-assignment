@@ -12,7 +12,6 @@ export default function Overview() {
   });
 
   const { openDialog, DialogComponent, value } = useDialog({
-    type: "delete",
     onConfirm: () => onDeleteConcert(value),
   });
 
@@ -48,8 +47,9 @@ export default function Overview() {
           title={concert.concertName}
           isConcertCard
           cardContent={concert}
+          type="delete"
           onClickButton={() => {
-            openDialog(concert.id, concert.concertName);
+            openDialog(concert.id, concert.concertName, "delete");
           }}
         >
           <div>{concert.description}</div>

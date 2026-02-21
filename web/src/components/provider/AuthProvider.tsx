@@ -1,6 +1,6 @@
 "use client";
 
-import {  setRole } from "@/src/store/features/userSlice";
+import { setRole, setUserId } from "@/src/store/features/userSlice";
 import { useAppDispatch } from "@/src/store/hooks";
 import { ReactNode, useEffect } from "react";
 
@@ -9,11 +9,15 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const savedRole = localStorage.getItem("role");
+    const savedUserId = localStorage.getItem("userId");
 
     if (savedRole) {
       dispatch(setRole(savedRole));
     }
-
+    if (savedUserId) {
+      dispatch(setUserId(Number(savedUserId)));
+    }
+    
   }, [dispatch]);
 
   return <>{children}</>;

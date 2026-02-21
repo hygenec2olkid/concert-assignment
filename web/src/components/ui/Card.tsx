@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import React from "react";
 import PersonIcon from "@mui/icons-material/Person";
-import CustomButton from "./Button";
+import CustomButton, { ButtonType } from "./Button";
 import { ConcertResponse } from "@/src/lib/api/concert/type";
 
 type CardProps = {
@@ -13,6 +13,7 @@ type CardProps = {
   cardContent?: ConcertResponse;
   isFormCard?: boolean;
   loading?: boolean;
+  type?: ButtonType;
   onClickButton?: () => void;
 };
 
@@ -23,6 +24,7 @@ export default function CustomCard({
   onClickButton,
   isFormCard,
   cardContent,
+  type,
 }: CardProps) {
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -46,7 +48,7 @@ export default function CustomCard({
         {children}
       </CardContent>
 
-      {isConcertCard && (
+      {isConcertCard && type && (
         <CardContent
           sx={{ display: "flex", alignItems: "bottom", paddingInline: "30px" }}
         >
@@ -57,7 +59,7 @@ export default function CustomCard({
                 {`${cardContent?.availableSeat} / ${cardContent?.totalSeat}`}
               </span>
             </div>
-            <CustomButton type="delete" onClick={onClickButton}></CustomButton>
+            <CustomButton type={type} onClick={onClickButton}></CustomButton>
           </div>
         </CardContent>
       )}
