@@ -6,29 +6,32 @@ import TableRowsIcon from "@mui/icons-material/TableRows";
 import useApi from "@/src/hooks/useApi";
 import { getHistoryApi } from "@/src/lib/api/history/request";
 import { HistoryResponse } from "@/src/lib/api/history/type";
+import { useAppSelector } from "@/src/store/hooks";
 
 const headers = ["Date Time", "Username", "Concert name", "Action"];
-
-// const rows = [
-//   { name: "Frozen yoghurt", calories: 159, fat: 6, carbs: 24 },
-//   {
-//     name: "Ice cream sandwich",
-//     calories: 237,
-//     fat: 9,
-//     carbs: 37,
-//   },
-// ];
 
 export default function History() {
   const [open, setOpen] = useState(false);
   const { callApi } = useApi<HistoryResponse[]>();
+  const { userId, role } = useAppSelector((state) => state.user);
+
   const [rows, setRows] = useState<
     Record<string, string | boolean | number | null>[]
   >([]);
 
+  const getUserId = () => {
+    if (role === "Admin") {
+      return undefined;
+    } else {
+      return userId;
+    }
+  };
+
   useEffect(() => {
     const execute = async () => {
-      const res = await callApi(() => getHistoryApi());
+      const userIdToFetch = getUserId();
+      const res = await callApi(() => getHistoryApi(userIdToFetch));
+
       if (res) {
         const formattedRows = res.map((history) => ({
           dateTime: new Date(history.dateTime).toLocaleString(),
@@ -41,7 +44,8 @@ export default function History() {
     };
 
     execute();
-  }, [callApi]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

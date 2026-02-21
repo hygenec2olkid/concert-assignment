@@ -23,8 +23,9 @@ export class HistoryService {
     return await this.historyRepository.save(history);
   }
 
-  async findAll(): Promise<HistoryDto[]> {
+  async findAll(userId?: string): Promise<HistoryDto[]> {
     const history = await this.historyRepository.find({
+      where: userId ? { user: { id: Number(userId) } } : {},
       order: {
         id: 'DESC',
       },
