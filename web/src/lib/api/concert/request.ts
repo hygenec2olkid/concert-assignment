@@ -4,6 +4,7 @@ import {
   ConcertResponse,
   CreateConcertRequest,
   ConcertUserRequest,
+  SummaryResponse,
 } from "./type";
 
 const BASE_CONCERT_URL = "/concert";
@@ -40,4 +41,8 @@ export const cancelApi: (
   req: ConcertUserRequest
 ) => Promise<{ message: string }> = (req) => {
   return requset.post(`${BASE_CONCERT_URL}/cancel`, req);
+};
+
+export const getSummaryApi: () => Promise<SummaryResponse> = () => {
+  return requset.get(`${BASE_CONCERT_URL}/summary`);
 };

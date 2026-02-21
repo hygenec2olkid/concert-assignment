@@ -12,6 +12,7 @@ import { BuyTicketDto } from './dto/buy-ticket.dto';
 import { Ticket } from './entities/ticket.entity';
 import { UserService } from '../user/user.service';
 import { HistoryService } from '../history/reservation.service';
+import { SummaryDto } from './dto/summary.dto';
 
 @Injectable()
 export class ConcertService {
@@ -88,7 +89,7 @@ export class ConcertService {
     return await this.concertRepository.save(concert);
   }
 
-  async buyTicket(req: BuyTicketDto) {
+  async buyTicket(req: BuyTicketDto): Promise<{ message: string }> {
     const { concertId, userId } = req;
 
     const concert = await this.handleReserveConcert(concertId);
@@ -134,7 +135,7 @@ export class ConcertService {
     });
   }
 
-  async cancelTicket(req: BuyTicketDto) {
+  async cancelTicket(req: BuyTicketDto): Promise<{ message: string }> {
     const { concertId, userId } = req;
 
     const ticket = await this.ticketRepository.findOne({
@@ -162,5 +163,19 @@ export class ConcertService {
     });
 
     return { message: 'Cancel successfully' };
+  }
+
+  async getSummary(): Promise<SummaryDto> {
+    const totalSeat = await this.concertRepository.sum('total_seat');
+
+    const reserve = await this.ticketRepository.count();
+
+    const cancel = await this.historyService.getCountCancelHistory();
+
+    return {
+      totalSeat: totalSeat || 0,
+      reserve,
+      cancel,
+    };
   }
 }

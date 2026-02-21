@@ -7,9 +7,7 @@ import { deleteConcertApi, getConcertApi } from "@/src/lib/api/concert/request";
 import { ConcertResponse } from "@/src/lib/api/concert/type";
 
 export default function Overview() {
-  const { ToastComponent, onOpen } = useToast({
-    type: "success",
-  });
+  const { ToastComponent, onOpen } = useToast();
 
   const { openDialog, DialogComponent, value } = useDialog({
     onConfirm: () => onDeleteConcert(value),
@@ -31,7 +29,7 @@ export default function Overview() {
   };
 
   const execute = () => {
-    Promise.all([callApi(() => getConcertApi())]);
+    callApi(() => getConcertApi());
   };
 
   useEffect(() => {

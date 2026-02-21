@@ -44,4 +44,9 @@ export class ConcertController {
   cancelTicket(@Body() req: CancelTicketDto) {
     return this.concertService.cancelTicket(req);
   }
+
+  @Get('summary')
+  getSummary() {
+    return this.concertService.getSummary();
+  }
 }

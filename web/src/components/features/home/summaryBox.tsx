@@ -6,7 +6,7 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 type SummaryBoxType = "total" | "reserve" | "cancel";
 
 type SummaryBoxProps = {
-  value: number;
+  value?: number;
   type: SummaryBoxType;
 };
 

@@ -6,10 +6,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 type ToastType = "success";
 
-type ToastProps = {
-  type: ToastType;
-};
-
 type ToastConfig = {
   icon?: React.ReactNode;
   color?: "primary" | "error" | "secondary" | "success";
@@ -23,14 +19,16 @@ const ToastConfig: Record<ToastType, ToastConfig> = {
   },
 };
 
-export function useToast({ type }: ToastProps) {
+export function useToast() {
   const [open, setOpen] = React.useState(false);
   const [content, setContent] = React.useState("");
+  const [type, setType] = React.useState<ToastType>("success");
   const config = ToastConfig[type];
 
-  const onOpen = (content: string) => {
+  const onOpen = (content: string, type?: ToastType) => {
     setContent(content);
     setOpen(true);
+    if (type) setType(type);
   };
 
   const handleClose = (

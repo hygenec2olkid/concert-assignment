@@ -27,3 +27,9 @@ export type ConcertUserRequest = {
   concertId: number;
   userId: number;
 };
+
+export type SummaryResponse = {
+  totalSeat: number;
+  reserve: number;
+  cancel: number;
+};

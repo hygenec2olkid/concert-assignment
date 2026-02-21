@@ -26,9 +26,7 @@ export default function User() {
   const { openDialog, DialogComponent, value, type } = useDialog({
     onConfirm: () => handleConcertAction(value, type),
   });
-  const { ToastComponent, onOpen } = useToast({
-    type: "success",
-  });
+  const { ToastComponent, onOpen } = useToast();
 
   const handleConcertAction = async (concertId: number, actionType: string) => {
     if (!userId) return;

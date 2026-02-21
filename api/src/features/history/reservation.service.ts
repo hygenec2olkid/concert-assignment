@@ -42,4 +42,8 @@ export class HistoryService {
       };
     });
   }
+
+  async getCountCancelHistory(): Promise<number> {
+    return await this.historyRepository.countBy({ action: 'Cancel' });
+  }
 }
