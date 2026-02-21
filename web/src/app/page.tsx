@@ -3,6 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "../store/hooks";
 import { setRole } from "../store/features/userSlice";
+import useApi from "../hooks/useApi";
+import { useEffect } from "react";
+import { getListUserApi } from "../lib/api/user/request";
+import { UserResponse } from "../lib/api/user/type";
 
 export default function Home() {
   const router = useRouter();
@@ -21,6 +25,17 @@ export default function Home() {
     }
   };
 
+  const { callApi } = useApi<UserResponse[]>();
+
+  useEffect(() => {
+    const execute = () => {
+      callApi(() => getListUserApi());
+    };
+
+    execute();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="flex items-center justify-center gap-5 h-full">
       Login via:
@@ -36,6 +51,7 @@ export default function Home() {
       >
         user
       </button>
+      {/* <LoadingComponent /> */}
     </div>
   );
 }

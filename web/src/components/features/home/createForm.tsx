@@ -4,7 +4,6 @@ import CustomInput from "../../ui/Input";
 import useApi from "@/src/hooks/useApi";
 import { createNewConcertApi } from "@/src/lib/api/concert/request";
 import { Concert, CreateConcertRequest } from "@/src/lib/api/concert/type";
-import { useLoading } from "@/src/hooks/useLoading";
 
 type FormData = {
   concertName: string;
@@ -23,24 +22,15 @@ export default function CreateForm() {
 
   const { callApi, loading } = useApi<Concert>();
 
-  const { onLoading, LoadingComponent, offLoading } = useLoading();
-
   const createNewConcert = async (data: FormData) => {
     const req: CreateConcertRequest = {
       concertName: data.concertName,
       description: data.description,
       totalSeat: data.seat,
     };
-    try {
-      onLoading();
-      const res = await callApi(() => createNewConcertApi(req));
 
-      if (res) {
-        reset();
-      }
-    } finally {
-      offLoading();
-    }
+    const res = await callApi(() => createNewConcertApi(req));
+    if (res) reset();
   };
 
   return (
@@ -88,7 +78,6 @@ export default function CreateForm() {
           </div>
         </div>
       </form>
-      <LoadingComponent />
     </CustomCard>
   );
 }

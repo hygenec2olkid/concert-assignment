@@ -1,12 +1,9 @@
-import * as React from "react";
 import Backdrop from "@mui/material/Backdrop";
 import { CircularProgress } from "@mui/material";
+import { useAppSelector } from "../store/hooks";
 
 export function useLoading() {
-  const [loading, setLoading] = React.useState(false);
-
-  const onLoading = () => setLoading(true);
-  const offLoading = () => setLoading(false);
+  const loading = useAppSelector((state) => state.loading.isLoading);
 
   const LoadingComponent = () => (
     <Backdrop
@@ -16,5 +13,5 @@ export function useLoading() {
       <CircularProgress color="inherit" />
     </Backdrop>
   );
-  return { LoadingComponent, onLoading, offLoading };
+  return { LoadingComponent };
 }

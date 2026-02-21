@@ -100,7 +100,7 @@ export class ConcertService {
     await this.historyService.createNewHistory({
       concert: concert,
       user: user,
-      action: 'RESERVE',
+      action: 'Reserve',
     });
 
     return { message: 'Reserve successfully' };

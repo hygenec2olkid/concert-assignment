@@ -5,7 +5,6 @@ import useApi from "@/src/hooks/useApi";
 import { useEffect } from "react";
 import { deleteConcertApi, getConcertApi } from "@/src/lib/api/concert/request";
 import { ConcertResponse } from "@/src/lib/api/concert/type";
-import { useLoading } from "@/src/hooks/useLoading";
 
 export default function Overview() {
   const { ToastComponent, onOpen } = useToast({
@@ -17,43 +16,28 @@ export default function Overview() {
     onConfirm: () => onDeleteConcert(value),
   });
 
-  const { onLoading, LoadingComponent, offLoading } = useLoading();
-
   const { data: concerts, callApi } = useApi<ConcertResponse[]>();
 
   const { callApi: deleteConcert } = useApi<{
     message: string;
   }>();
 
-  const getConcerts = async () => {
-    try {
-      onLoading();
-      await callApi(() => getConcertApi());
-    } finally {
-      offLoading();
-    }
-  };
-
   const onDeleteConcert = async (id: number) => {
     const res = await deleteConcert(() => deleteConcertApi(id));
 
     if (res) {
       onOpen(res.message);
-      getConcerts();
+      callApi(() => getConcertApi());
     }
   };
 
-  const execute = async () => {
-    try {
-      onLoading();
-      Promise.all([await callApi(() => getConcertApi())]);
-    } finally {
-      offLoading();
-    }
+  const execute = () => {
+    Promise.all([callApi(() => getConcertApi())]);
   };
 
   useEffect(() => {
     execute();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -74,7 +58,6 @@ export default function Overview() {
 
       <DialogComponent />
       <ToastComponent />
-      <LoadingComponent />
     </div>
   );
 }
