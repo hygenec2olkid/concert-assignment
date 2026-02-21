@@ -45,20 +45,36 @@ export default function CustomTable({ header, data }: CustomTableProps) {
         </TableHead>
 
         <TableBody>
-          {data.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
-              {Object.values(row).map((cell, cellIndex) => (
-                <TableCell
-                  key={cellIndex}
-                  sx={{
-                    border: "1px solid #e0e0e0",
-                  }}
-                >
-                  {cell}
-                </TableCell>
-              ))}
+          {data.length === 0 ? (
+            <TableRow>
+              <TableCell
+                colSpan={header.length}
+                align="center"
+                sx={{
+                  border: "1px solid #e0e0e0",
+                  py: 2,
+                  color: "#9e9e9e",
+                }}
+              >
+                No data available
+              </TableCell>
             </TableRow>
-          ))}
+          ) : (
+            data.map((row, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {Object.values(row).map((cell, cellIndex) => (
+                  <TableCell
+                    key={cellIndex}
+                    sx={{
+                      border: "1px solid #e0e0e0",
+                    }}
+                  >
+                    {cell}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </TableContainer>
