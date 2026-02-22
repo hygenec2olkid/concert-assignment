@@ -1,4 +1,4 @@
-# 🎫Concert-assignment
+# 🎫 Concert-assignment
 
 A web application for managing concerts and seat reservations.
 
@@ -42,8 +42,8 @@ Admins are able to:
 
 ## Database
 
-- **PostgreSQL**
-- **Docker** – Containerized database setup
+- **PostgreSQL** - Relational database that fits well with a transactional system like ticket reservation
+- **Docker**     – Containerized database setup
 
 ---
 
