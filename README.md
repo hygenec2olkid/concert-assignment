@@ -59,7 +59,7 @@ Admins are able to:
 ---
 
 ## ⚙️ Setup & Configuration (Run Locally)
-clone project:
+clone project
 ```bash
 git clone https://github.com/hygenec2olkid/concert-assignment.git
 ```
@@ -68,3 +68,40 @@ cd concert-assignment then run command
 ```bash
 make up
 ```
+
+---
+## Bonus task
+Express your opinion about how to optimize your website in case that this
+website contains intensive data and when more people access, the lower speed
+you get?
+    - Implementing pagination to avoid loading large datasets at once  
+    - Using lazy loading when fetching data
+    - Minimizing unnecessary re-renders  
+    - Using proper memoization (e.g., React.memo, useMemo)  
+    - Use CDN for static assets
+
+Express your opinion about how to handle when many users want to reserve the
+ticket at the same time? We want to ensure that in the concerts there is no one
+that needs to stand up during the show.
+- This is a race condition problem. To prevent overbooking, there are two common approaches:
+    1. Use database locking (e.g., row-level lock)
+    2. Use atomic conditional update
+
+I would choose **atomic conditional update** because it performs better under high concurrency.
+
+Using database locks can cause heavy blocking. For example, if 1,000,000 users try to reserve at the same time, many requests may be forced to wait for the lock, which reduces performance and scalability.
+
+Instead, I would use an atomic update like:
+
+`UPDATE concert 
+ SET available_seat = available_seat - 1
+ WHERE id = ? AND available_seat > 0;`
+
+Then check the affected rows:
+
+- If 1 row is updated → reservation successful  
+- If 0 rows are updated → no seat available  
+
+This ensures no negative seat count and prevents double booking.
+
+- Additionally, use transaction consistency. If any step fails, the transaction will roll back to maintain data consistency.
