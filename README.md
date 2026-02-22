@@ -68,8 +68,20 @@ cd concert-assignment then run command
 ```bash
 make up
 ```
-
 ---
+
+## Run unit test
+cd api , run unit test
+```bash
+npm run test
+```
+run test coverage
+```bash
+npm run test:cov
+```
+---
+
+
 ## Bonus task
 Express your opinion about how to optimize your website in case that this
 website contains intensive data and when more people access, the lower speed
