@@ -71,28 +71,29 @@ export class ConcertService {
     return { message: 'Delete successfully' };
   }
 
-  async handleReserveConcert(id: number): Promise<Concert> {
-    const concert = await this.concertRepository.findOneBy({ id });
-
-    if (!concert) {
-      throw new NotFoundException(`Concert with id ${id} not found`);
-    }
-
-    const availableSeat = concert.available_seat;
-
-    if (availableSeat <= 0) {
-      throw new BadRequestException('No available seats');
-    }
-
-    concert.available_seat -= 1;
-
-    return await this.concertRepository.save(concert);
-  }
-
   async buyTicket(req: BuyTicketDto): Promise<{ message: string }> {
     const { concertId, userId } = req;
 
-    const concert = await this.handleReserveConcert(concertId);
+    const result = await this.concertRepository
+      .createQueryBuilder()
+      .update(Concert)
+      .set({ available_seat: () => 'available_seat - 1' })
+      .where('id = :id', { id: concertId })
+      .andWhere('available_seat > 0')
+      .returning('*')
+      .execute();
+
+    if (result.affected === 0) {
+      const concert = await this.concertRepository.findOneBy({ id: concertId });
+
+      if (!concert) {
+        throw new NotFoundException(`Concert with id ${concertId} not found`);
+      }
+
+      throw new BadRequestException('No available seats');
+    }
+
+    const concert = (result.raw as Concert[])[0];
 
     const user = await this.userService.getUserById(userId);
 
