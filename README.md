@@ -29,16 +29,12 @@ Admins are able to:
 
 ## Frontend
 
-- **Next.js** – React framework for building the UI
-- **TypeScript** – Static typing for better maintainability
-- **Redux Toolkit**
-  - Manages global state (e.g., user/admin role)
-- **Axios**
-  - Handles API requests
-- **TailwindCSS**
-  - Utility styling
-- **MUI (Material UI)**
-  - UI components
+- **Next.js**             – React framework for building the UI
+- **TypeScript**          – Static typing for better maintainability
+- **Redux Toolkit**       - Manages global state (e.g., user/admin role)
+- **Axios**               - Handles API requests
+- **TailwindCSS**         - Utility styling
+- **MUI (Material UI)**   - UI components
 
 ## Backend
 
@@ -66,7 +62,7 @@ Admins are able to:
 ```bash
 git clone https://github.com/hygenec2olkid/concert-assignment.git
 
----
+# ⚙️
 
 ```bash
 make up
