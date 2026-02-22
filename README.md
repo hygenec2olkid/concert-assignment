@@ -61,8 +61,4 @@ Admins are able to:
 # ⚙️ Setup & Configuration (Run Locally)
 ```bash
 git clone https://github.com/hygenec2olkid/concert-assignment.git
-
-# ⚙️
-
-```bash
-make up
+cd concert-assignment
