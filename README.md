@@ -58,14 +58,10 @@ Admins are able to:
 
 ---
 
-# ⚙️ Setup & Configuration (Run Locally)
+## ⚙️ Setup & Configuration (Run Locally)
 ```bash
 git clone https://github.com/hygenec2olkid/concert-assignment.git
-cd concert-assignment
-
----
-
-# ⚙️ Setup & Configuration (Run Locally)
+```
 ```bash
-git clone https://github.com/hygenec2olkid/concert-assignment.git
-cd concert-assignment
+make up
+```
