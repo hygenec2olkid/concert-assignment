@@ -46,6 +46,7 @@ export default function Sidebar({
     if (value === "Switch to user" || value === "Switch to Admin") {
       const newRole = value === "Switch to user" ? "User" : "Admin";
       dispatch(setRole(newRole));
+      localStorage.setItem("role", newRole);
     }
 
     if (value === "Home" || value === "Switch to Admin") {
