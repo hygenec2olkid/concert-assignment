@@ -73,18 +73,18 @@ make up
 ## Bonus task
 Express your opinion about how to optimize your website in case that this
 website contains intensive data and when more people access, the lower speed
-you get? \n
+you get? <br>
     - Implementing pagination to avoid loading large datasets at once  
     - Using lazy loading when fetching data
     - Minimizing unnecessary re-renders  
     - Using proper memoization (e.g., React.memo, useMemo)  
     - Use CDN for static assets
-    
+
 ---
 
 Express your opinion about how to handle when many users want to reserve the
 ticket at the same time? We want to ensure that in the concerts there is no one
-that needs to stand up during the show.
+that needs to stand up during the show.<br>
 - This is a race condition problem. To prevent overbooking, there are two common approaches:
     1. Use database locking (e.g., row-level lock)
     2. Use atomic conditional update
