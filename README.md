@@ -1,8 +1,18 @@
 # concert-assignment
 
-A full-stack web application for managing concerts and seat reservations.  
-The system allows users to view concerts, check seat availability, and reserve seats and admin can create, delete concerts and see history.
+Web application for managing concerts and seat reservations.  
 
+Users can:
+- Able to view all concerts (included out-of-ticket concerts)
+- Able to reserve seats - 1 seat per 1 user
+- Able to cancel reserve seats
+- Able to view own reservation history
+
+Admins can:
+- Able to create / delete concerts
+- Able to view users reservation history
+
+---
 
 # 📦 Tech Stack
 
@@ -11,21 +21,29 @@ The system allows users to view concerts, check seat availability, and reserve s
 - Next.js
 - TypeScript
 - Redux Toolkit
+    - store role admin/user
 - Axios
+    - making reqesuut api
 - TailwindCSS
-- MUI
-
+    - style inline
+- MUI (Material UI)
+    - component
 
 ## Backend
 
-- Nestjs
+- NestJS
 
 ## Database
 
 - PostgreSQL
 - Docker
 
----
 
 # ⚙️ Setup & Configuration (Run Locally)
-run make up for build and start NextJs, NestJs and Database
+
+## 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/hygenec2olkid/concert-assignment.git
+cd concert-assignment
+make up
