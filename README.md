@@ -59,9 +59,11 @@ Admins are able to:
 ---
 
 ## ⚙️ Setup & Configuration (Run Locally)
+ - clone project:
 ```bash
 git clone https://github.com/hygenec2olkid/concert-assignment.git
 ```
+ - cd concert-assignment then run command
 ```bash
 make up
 ```
