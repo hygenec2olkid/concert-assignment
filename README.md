@@ -51,6 +51,17 @@ Admins are able to:
 
 ---
 
+## Application architecture
+    project
+    ├── api/                    # NestJS backend source code
+    ├── db/                     # Database scripts SQL schema 
+    ├── web/                    # Next.js frontend source code
+    ├── docker-compose.yml      # Docker configuration for backend, frontend, and database
+    ├── Makefile                # Helper commands for build and startup
+    └── README.md               # Project documentation
+
+---
+
 # ⚙️ Setup & Configuration (Run Locally)
 ```bash
 git clone https://github.com/hygenec2olkid/concert-assignment.git
