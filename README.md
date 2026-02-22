@@ -41,9 +41,11 @@ Admins can:
 
 # ⚙️ Setup & Configuration (Run Locally)
 
-## 1️⃣ Clone Repository
-
 ```bash
 git clone https://github.com/hygenec2olkid/concert-assignment.git
+
+```bash
 cd concert-assignment
+
+```bash
 make up
