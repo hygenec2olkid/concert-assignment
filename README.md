@@ -73,12 +73,14 @@ make up
 ## Bonus task
 Express your opinion about how to optimize your website in case that this
 website contains intensive data and when more people access, the lower speed
-you get?
+you get? \n
     - Implementing pagination to avoid loading large datasets at once  
     - Using lazy loading when fetching data
     - Minimizing unnecessary re-renders  
     - Using proper memoization (e.g., React.memo, useMemo)  
     - Use CDN for static assets
+    
+---
 
 Express your opinion about how to handle when many users want to reserve the
 ticket at the same time? We want to ensure that in the concerts there is no one
