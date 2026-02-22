@@ -74,11 +74,11 @@ make up
 Express your opinion about how to optimize your website in case that this
 website contains intensive data and when more people access, the lower speed
 you get? <br>
-    - Implementing pagination to avoid loading large datasets at once  
-    - Using lazy loading when fetching data
-    - Minimizing unnecessary re-renders  
-    - Using proper memoization (e.g., React.memo, useMemo)  
-    - Use CDN for static assets
+- Implementing pagination to avoid loading large datasets at once  
+- Using lazy loading when fetching data
+- Minimizing unnecessary re-renders  
+- Using proper memoization (e.g., React.memo, useMemo)  
+- Use CDN for static assets
 
 ---
 
@@ -90,7 +90,6 @@ that needs to stand up during the show.<br>
     2. Use atomic conditional update
 
 I would choose **atomic conditional update** because it performs better under high concurrency.
-
 Using database locks can cause heavy blocking. For example, if 1,000,000 users try to reserve at the same time, many requests may be forced to wait for the lock, which reduces performance and scalability.
 
 Instead, I would use an atomic update like:
