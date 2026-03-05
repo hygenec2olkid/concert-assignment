@@ -98,10 +98,10 @@ Express your opinion about how to handle when many users want to reserve the
 ticket at the same time? We want to ensure that in the concerts there is no one
 that needs to stand up during the show.<br>
 - This is a race condition problem. To prevent overbooking, there are two common approaches:
-    1. Use database locking (e.g., row-level lock)
-    2. Use atomic conditional update
+    1. Pessimistic locking: Explicit, long-held locks
+    2. Atomic update: Implicit, short-lived locks
 
-I would choose **atomic conditional update** because it performs better under high concurrency.
+I would choose **Atomic update** because it performs better under high concurrency.
 Using database locks can cause heavy blocking. For example, if 1,000,000 users try to reserve at the same time, many requests may be forced to wait for the lock, which reduces performance and scalability.
 
 Instead, I would use an atomic update like:
