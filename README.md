@@ -101,10 +101,10 @@ that needs to stand up during the show.<br>
     1. Pessimistic locking: Explicit, long-held locks
     2. Atomic update: Implicit, short-lived locks
 
-I would choose **Atomic update** because it performs better under high concurrency.
-Using database locks can cause heavy blocking. For example, if 1,000,000 users try to reserve at the same time, many requests may be forced to wait for the lock, which reduces performance and scalability.
+I would use **atomic conditional** updates because they minimize lock duration 
+and maximize throughput under high concurrency
 
-Instead, I would use an atomic update like:
+Example:
 
 `UPDATE concert 
  SET available_seat = available_seat - 1
